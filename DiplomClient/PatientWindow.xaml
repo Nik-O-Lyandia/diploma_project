@@ -1,0 +1,202 @@
+﻿<Window x:Class="DiplomClient.PatientWindow"
+		xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+		xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+		xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+		xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+		xmlns:local="clr-namespace:DiplomClient"
+		mc:Ignorable="d"
+		Title="PatientWindow"
+		Height="511.976"
+		Width="1002.096">
+
+	<Grid>
+		<Label x:Name="MainLable"
+			   Content="Оберіть лікаря, розклад якого ви хотіли б переглянути:"
+			   HorizontalAlignment="Left"
+			   Margin="37,33,0,0"
+			   VerticalAlignment="Top"
+			   Width="Auto" 
+			   Visibility="Hidden"/>
+		<Button x:Name="MyVisitsButton"
+				Content="Мої візити"
+				HorizontalAlignment="Left"
+				Margin="38,159,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="MyVisitsButton_Click" />
+		<Button x:Name="BillsButton"
+				Content="Мої рахунки"
+				HorizontalAlignment="Left"
+				Margin="38,184,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="BillsButton_Click" />
+		<Button x:Name="LKButton"
+				Content="Подивитись ЛК"
+				HorizontalAlignment="Left"
+				Margin="37,209,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="LKButton_Click" />
+		<Button x:Name="VisitBookingButton"
+				Content="Записатись на прийом"
+				HorizontalAlignment="Left"
+				Margin="38,134,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="VisitBookingButton_Click" />
+		<Button x:Name="PayBillButton"
+				Content="Оплатити рахунок"
+				HorizontalAlignment="Left"
+				Margin="38,310,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="PayBillButton_Click" 
+				Visibility="Hidden"/>
+		<Button x:Name="BackButton"
+				Content="Назад"
+				HorizontalAlignment="Left"
+				Margin="38,370,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="BackButton_Click" 
+				Visibility="Hidden"/>
+		<DataGrid x:Name="InfoTableDataGrid"
+				  IsReadOnly="True"
+				  Visibility="Hidden"
+				  HorizontalAlignment="Left"
+				  Height="371"
+				  Margin="355,10,0,0"
+				  VerticalAlignment="Top"
+				  Width="629">
+		</DataGrid>
+		<Image x:Name="DocImage"
+			   HorizontalAlignment="Left"
+			   Height="100"
+			   Margin="460,10,0,0"
+			   VerticalAlignment="Top"
+			   Width="100" />
+		<Label x:Name="PIBLable"
+			   Content="PIB"
+			   HorizontalAlignment="Left"
+			   Margin="719,75,0,0"
+			   VerticalAlignment="Top"
+			   Visibility="Hidden" />
+		<Label x:Name="ExperienceLable"
+			   Content="Expa"
+			   HorizontalAlignment="Left"
+			   Margin="633,101,0,0"
+			   VerticalAlignment="Top"
+			   Visibility="Hidden" />
+		<Label x:Name="DegreeLable"
+			   Content="Degree"
+			   HorizontalAlignment="Left"
+			   Margin="794,101,0,0"
+			   VerticalAlignment="Top"
+			   Visibility="Hidden" />
+		<Label x:Name="CommentsLable"
+			   Content="Comments"
+			   HorizontalAlignment="Left"
+			   Margin="601,339,0,0"
+			   VerticalAlignment="Top"
+			   Visibility="Hidden" />
+		<Label x:Name="ScheduleLable"
+			   Content="Розклад"
+			   HorizontalAlignment="Left"
+			   Margin="601,141,0,0"
+			   VerticalAlignment="Top"
+			   Visibility="Hidden" />
+		<DataGrid x:Name="DoctorsListDataGrid"
+				  IsReadOnly="True"
+				  HorizontalAlignment="Left"
+				  Height="62"
+				  Margin="565,10,0,0"
+				  VerticalAlignment="Top"
+				  Width="419"
+				  SelectedCellsChanged="DoctorsListDataGrid_SelectedCellsChanged"
+				  Visibility="Hidden">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Ім'я"
+									Binding="{Binding Name}" />
+				<DataGridTextColumn Header="Прізвище"
+									Binding="{Binding Surname}" />
+				<DataGridTextColumn Header="Кабінет"
+									Binding="{Binding Room}" />
+				<DataGridTextColumn Header="Login"
+									Binding="{Binding Login}"
+									Visibility="Hidden" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<DataGrid x:Name="ScheduleDataGrid"
+				  IsReadOnly="True"
+				  HorizontalAlignment="Left"
+				  Height="163"
+				  Margin="565,167,0,0"
+				  VerticalAlignment="Top"
+				  Width="419"
+				  Visibility="Hidden">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Дата"
+									Binding="{Binding Date}" />
+				<DataGridTextColumn Header="Час"
+									Binding="{Binding Time}" />
+				<DataGridTextColumn Header="Вільно/Зайнято"
+									Binding="{Binding FreeOrNot}">
+					<DataGridTextColumn.ElementStyle>
+						<Style TargetType="{x:Type TextBlock}">
+							<Style.Triggers>
+								<Trigger Property="Text"
+										 Value="True">
+									<Setter Property="Background"
+											Value="LightGreen" />
+								</Trigger>
+								<Trigger Property="Text"
+										 Value="False">
+									<Setter Property="Background"
+											Value="#FFFF3131" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</DataGridTextColumn.ElementStyle>
+				</DataGridTextColumn>
+				<DataGridTextColumn Header="TimeId"
+									Binding="{Binding TimeId}"
+									Visibility="Hidden" />
+				<DataGridTextColumn Header="Login"
+									Binding="{Binding Login}"
+									Visibility="Hidden" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<DataGrid x:Name="CommentsDataGrid"
+				  IsReadOnly="True"
+				  HorizontalAlignment="Left"
+				  Height="84"
+				  Margin="565,370,0,0"
+				  VerticalAlignment="Top"
+				  Width="419"
+				  Visibility="Hidden">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="ПІБ"
+									Binding="{Binding PIB}" />
+				<DataGridTextColumn Header="Кабінет"
+									Binding="{Binding Room}" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<Button x:Name="BookingButton"
+				Content="Записатися"
+				HorizontalAlignment="Left"
+				Margin="490,310,0,0"
+				VerticalAlignment="Top"
+				Width="Auto"
+				Click="BookingButton_Click"
+				Visibility="Hidden" />
+		<RichTextBox x:Name="LKRichTextBox"
+					 HorizontalAlignment="Left"
+					 Margin="500,100,0,0"
+					 VerticalAlignment="Top"
+					 Width="400"
+					 Height="300"
+					 IsReadOnly="True"
+					 Visibility="Hidden" />
+	</Grid>
+</Window>

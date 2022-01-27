@@ -1,0 +1,2 @@
+C:\Kolya\Proging\C#\diplom\Diplom\Diplom\obj\Debug\Diplom.csproj.AssemblyReference.cache
+C:\Kolya\Proging\C#\diplom\Diplom\Diplom\obj\Debug\Diplom.csproj.CoreCompileInputs.cache
