@@ -28,8 +28,9 @@ namespace DiplomServer
             const string ip = "127.0.0.1";
             const int port = 8080;
 
-            bool boolAnswer = false;
-            string ResultStr = "";
+            bool boolAnswer;
+            string ResultStr;
+            byte[] ResultByteArr;
             string sendData = "";
 
             IPEndPoint tcpEndPoint = new IPEndPoint(IPAddress.Parse(ip), port);
@@ -153,11 +154,11 @@ namespace DiplomServer
                 //---------------------Запис на прийом------------------------
                 if (dataStringArray[0].Equals("VisitBooking"))
                 {
-                    ResultStr = visitBooking.VisitBookingFunc(dataStringArray);
+                    ResultByteArr = visitBooking.VisitBookingFunc(dataStringArray);
 
-                    if (!ResultStr.Equals(""))
+                    if (ResultByteArr.Length != 0 || ResultByteArr != null)
                     {
-                        sendData = ResultStr;
+                        listener.Send(ResultByteArr);
                     }
                     else
                     {
@@ -254,8 +255,8 @@ namespace DiplomServer
                         sendData = "AddBillFalse";
                     }
                 }
-
-                listener.Send(Encoding.Unicode.GetBytes(sendData));
+                if (!dataStringArray[0].Equals("VisitBooking"))
+                    listener.Send(Encoding.Unicode.GetBytes(sendData));
 
                 listener.Shutdown(SocketShutdown.Both);
                 listener.Close();

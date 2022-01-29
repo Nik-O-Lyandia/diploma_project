@@ -20,7 +20,7 @@ namespace DiplomServer.SubFuncs
                     PacientId = dataPac.Single(p => p.Login == dataStringArray[1]).Id,
                     DoctorId = dataDoc.Single(p => p.Login == dataStringArray[2]).Id,
                     Attendingdate = Convert.ToDateTime(dataStringArray[3]),
-                    Time = dataStringArray[5]
+                    Time = dataStringArray[4]
                 });
 
                 try

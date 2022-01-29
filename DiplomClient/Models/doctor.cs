@@ -9,5 +9,7 @@
         public string Passportseries { get; set; }
         public string Login { get; set; }
         public int PasswordHash { get; set; }
+        public int? Experience { get; set; }
+        public byte[] DocFoto { get; set; }
     }
 }

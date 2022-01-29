@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media.Imaging;
+using DiplomClient.SubFuncs;
 
 namespace DiplomClient
 {
@@ -131,25 +134,19 @@ namespace DiplomClient
             BookingButton.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
 
+            DoctorsListDataGrid.Items.Clear();
+
             byte[] data = Encoding.Unicode.GetBytes("VisitBooking");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
 
-            string[] answerData = transfer.TransferFunc(data).Split('$');
-            string[][] docsData = new string[answerData.Length - 1][];
-            for (int i = 0; i < answerData.Length - 1; i++)
+            List<Doctor> docs = ObjectReBuilder.ReBuildDoctorFromBytes(transfer.TransferFuncByte(data));
+
+            for (int i = 0; i < docs.Count; i++)
             {
-                docsData[i] = answerData[i].Split('|');
-                Doctor doc = new Doctor()
-                {
-                    Id = Convert.ToInt32(docsData[i][0]),
-                    Name = docsData[i][1],
-                    Surname = docsData[i][2],
-                    Login = docsData[i][2]
-                };
-                DoctorsListDataGrid.Items.Add(doc);
+                DoctorsListDataGrid.Items.Add(docs[i]);
             }
         }
 
@@ -234,7 +231,8 @@ namespace DiplomClient
 
         private void DoctorsListDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
-            RefreshSchedule();
+            if (DoctorsListDataGrid.Items.Count != 0)
+                RefreshSchedule();
         }
 
         private void RefreshSchedule()
@@ -244,6 +242,7 @@ namespace DiplomClient
             Doctor doc = (Doctor)DoctorsListDataGrid.SelectedItem;
             DateTime dateTimeNow = DateTime.Now;
             string time = "";
+            DocImage.Source = LoadImage(doc.DocFoto);
 
             for (int i = 0; i < 55; i++)
             {
@@ -345,6 +344,26 @@ namespace DiplomClient
             LKRichTextBox.Visibility = Visibility.Hidden;
 
             BackButton.Visibility = Visibility.Hidden;
+
+            
+        }
+
+        private static BitmapImage LoadImage(byte[] imageData)
+        {
+            if (imageData == null || imageData.Length == 0) return null;
+            var image = new BitmapImage();
+            using (var mem = new MemoryStream(imageData))
+            {
+                mem.Position = 0;
+                image.BeginInit();
+                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
+                image.CacheOption = BitmapCacheOption.OnLoad;
+                image.UriSource = null;
+                image.StreamSource = mem;
+                image.EndInit();
+            }
+            image.Freeze();
+            return image;
         }
 
         // TODO: добавить обработку КОМЕНТАРИЕВ, ОЦЕНКИ и ОПЫТА РОБОТЫ

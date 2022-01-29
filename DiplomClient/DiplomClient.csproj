@@ -59,9 +59,11 @@
       <DependentUpon>EditVisit.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\bill.cs" />
+    <Compile Include="Models\comment.cs" />
     <Compile Include="Models\doctor.cs" />
     <Compile Include="Models\pacient.cs" />
     <Compile Include="Models\reseption.cs" />
+    <Compile Include="SubFuncs\ObjectReBuilder.cs" />
     <Compile Include="Transfer.cs" />
     <Page Include="AddBill.xaml">
       <SubType>Designer</SubType>

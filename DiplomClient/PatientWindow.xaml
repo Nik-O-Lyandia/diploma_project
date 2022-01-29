@@ -125,6 +125,12 @@
 				<DataGridTextColumn Header="Login"
 									Binding="{Binding Login}"
 									Visibility="Hidden" />
+				<DataGridTextColumn Header="Experience"
+									Binding="{Binding Experience}"
+									Visibility="Hidden" />
+				<DataGridTextColumn Header="DocFoto"
+									Binding="{Binding DocFoto}"
+									Visibility="Hidden" />
 			</DataGrid.Columns>
 		</DataGrid>
 		<DataGrid x:Name="ScheduleDataGrid"
