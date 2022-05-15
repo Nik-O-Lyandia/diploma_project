@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DiplomServer
+namespace DiplomServer.Models
 {
     public partial class Bill
     {

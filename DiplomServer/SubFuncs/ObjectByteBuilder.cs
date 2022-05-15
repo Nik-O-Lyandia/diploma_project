@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DiplomServer.Models;
 /*
  * This class contains builder functions for every object to send them via WebSockets.
  * Every sending object is a byte array which has such structure:

@@ -33,6 +33,9 @@ namespace DiplomClient
 
         private void LookScheduleButton_Click(object sender, RoutedEventArgs e)
         {
+            MainMenuStackPanel.Visibility = Visibility.Hidden;
+            FixPacientButton.Visibility = Visibility.Visible;
+
             RefreshSchedule();
         }
 
@@ -126,12 +129,18 @@ namespace DiplomClient
 
         private void MyPacientsButton_Click(object sender, RoutedEventArgs e)
         {
+            MainMenuStackPanel.Visibility = Visibility.Hidden;
+
+            EditLKButton.Visibility = Visibility.Visible;
+            AddBillButton.Visibility = Visibility.Visible;
+
             ShowPacients();
         }
 
         private void ShowPacients()
         {
             MyPacDataGrid.Visibility = Visibility.Visible;
+
             MyPacDataGrid.Items.Clear();
 
             byte[] data = Encoding.Unicode.GetBytes("MyPacients");
@@ -162,12 +171,24 @@ namespace DiplomClient
             EditLKRichTextBox.Visibility = Visibility.Hidden;
 
             AddVisitButton.Visibility = Visibility.Hidden;
+            AddNoteButton.Visibility = Visibility.Hidden;
+            PacVisitedButton.Visibility = Visibility.Hidden;
+            AddVisitConfirmButton.Visibility = Visibility.Hidden;
+            AddBillConfirmButton.Visibility = Visibility.Hidden;
+            FixPacientButton.Visibility = Visibility.Hidden;
+            AddBillButton.Visibility = Visibility.Hidden;
+            EditLKButton.Visibility = Visibility.Hidden;
+            BiilCanvas.Visibility = Visibility.Hidden;
+
+            MainMenuStackPanel.Visibility = Visibility.Visible;
 
         }
 
-        private void BillsButton_Click(object sender, RoutedEventArgs e)
+        private void BillsButton_Click(object sender, RoutedEventArgs e)    // TODO: Deleting bill
         {
+            MainMenuStackPanel.Visibility = Visibility.Hidden;
             BillsDataGrid.Visibility = Visibility.Visible;
+
             BillsDataGrid.Items.Clear();
 
             byte[] data = Encoding.Unicode.GetBytes("MyBills");
@@ -196,6 +217,8 @@ namespace DiplomClient
         private void EditLKButton_Click(object sender, RoutedEventArgs e)
         {
             EditLKRichTextBox.Visibility = Visibility.Visible;
+            AddNoteButton.Visibility = Visibility.Visible;
+            EditLKButton.Visibility = Visibility.Hidden;
             MyPacDataGrid.Visibility = Visibility.Hidden;
         }
 
@@ -226,6 +249,10 @@ namespace DiplomClient
             if (ScheduleDataGrid.SelectedItem != null)
             {
                 ScheduleDataGrid.Visibility = Visibility.Hidden;
+                AddVisitButton.Visibility = Visibility.Hidden;
+                PacVisitedButton.Visibility = Visibility.Visible;
+                AddVisitConfirmButton.Visibility = Visibility.Visible;
+
                 ShowPacients();
             }
             else
@@ -274,13 +301,10 @@ namespace DiplomClient
             if (MyPacDataGrid.SelectedItem != null)
             {
                 MyPacDataGrid.Visibility = Visibility.Hidden;
-                BillNameLable.Visibility = Visibility.Visible;
-                BillCostLable.Visibility = Visibility.Visible;
-                BillComaLable.Visibility = Visibility.Visible;
-                BillGRNLable.Visibility = Visibility.Visible;
-                BillCostATextBox.Visibility = Visibility.Visible;
-                BillCostBTextBox.Visibility = Visibility.Visible;
-                BillNameTextBox.Visibility = Visibility.Visible;
+                AddBillButton.Visibility = Visibility.Hidden;
+                EditLKButton.Visibility = Visibility.Hidden;
+
+                BiilCanvas.Visibility = Visibility.Visible;
             }
             else
             {

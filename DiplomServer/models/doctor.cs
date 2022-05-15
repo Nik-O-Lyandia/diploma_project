@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace DiplomServer
+namespace DiplomServer.Models
 {
     public partial class Doctor
     {
@@ -24,6 +24,8 @@ namespace DiplomServer
         public int PasswordHash { get; set; }
         public int? Experience { get; set; }
         public byte[] DocFoto { get; set; }
+        public string Room { get; set; }
+        public decimal Rating { get; set; }
 
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

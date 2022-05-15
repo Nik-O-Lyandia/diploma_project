@@ -136,5 +136,11 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="image_2022-05-08_23-38-54.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="background_img_mirror.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

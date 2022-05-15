@@ -25,32 +25,64 @@ namespace DiplomClient
         {
             InitializeComponent();
 
+            Col0.Width = GridLength.Auto;
+            Col1.Width = new GridLength(0);
+            Col2.Width = new GridLength(0);
+
+            Row0.Height = new GridLength(200);
+            Row1.Height = new GridLength(0);
+            Row2.Height = new GridLength(0);
+
             UserLogin = login;
         }
 
-        private void LKButton_Click(object sender, RoutedEventArgs e)
+        private void VisitBookingButton_Click(object sender, RoutedEventArgs e)
         {
+            Col0.Width = GridLength.Auto;
+            Col1.Width = GridLength.Auto;
+            Col2.Width = new GridLength(DoctorsListDataGrid.Width + DoctorsListDataGrid.Margin.Right + DoctorsListDataGrid.Margin.Left);
+
+            Row0.Height = new GridLength(DoctorsListDataGrid.Height + DoctorsListDataGrid.Margin.Top + DoctorsListDataGrid.Margin.Bottom);
+            Row1.Height = new GridLength(0);
+            Row2.Height = new GridLength(0);
+
             BillsButton.Visibility = Visibility.Hidden;
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
 
-            LKRichTextBox.Visibility = Visibility.Visible;
+            MainLable.Visibility = Visibility.Visible;
+            DocImage.Visibility = Visibility.Visible;
+            DoctorsListDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
 
-            byte[] data = Encoding.Unicode.GetBytes("LookLK");
+
+            DoctorsListDataGrid.Items.Clear();
+
+            byte[] data = Encoding.Unicode.GetBytes("VisitBooking");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
 
+            List<Doctor> docs = ObjectReBuilder.ReBuildDoctorFromBytes(transfer.TransferFuncByte(data));
 
-            LKRichTextBox.Document.Blocks.Clear();
-            LKRichTextBox.Document.Blocks.Add(new Paragraph(new Run(transfer.TransferFunc(data))));
+            for (int i = 0; i < docs.Count; i++)
+            {
+                DoctorsListDataGrid.Items.Add(docs[i]);
+            }
         }
 
         private void BillsButton_Click(object sender, RoutedEventArgs e)
         {
+            Col0.Width = GridLength.Auto;
+            Col1.Width = new GridLength(0);
+            Col2.Width = GridLength.Auto;
+
+            Row0.Height = GridLength.Auto;
+            Row1.Height = new GridLength(0);
+            Row2.Height = new GridLength(0);
+
             BillsButton.Visibility = Visibility.Hidden;
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
@@ -87,7 +119,10 @@ namespace DiplomClient
             textColumns[4] = new DataGridTextColumn();      // TODO: Замінити логін на щось іще
             textColumns[4].Header = "Логін";
             textColumns[4].Binding = new Binding("Login");
+            textColumns[4].Visibility = Visibility.Hidden;
             InfoTableDataGrid.Columns.Add(textColumns[4]);
+
+            // TODO: Додати колонку СТАТУС
 
             byte[] data = Encoding.Unicode.GetBytes("MyBills");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
@@ -114,66 +149,16 @@ namespace DiplomClient
 
         }
 
-        private void VisitBookingButton_Click(object sender, RoutedEventArgs e)
-        {
-            BillsButton.Visibility = Visibility.Hidden;
-            LKButton.Visibility = Visibility.Hidden;
-            MyVisitsButton.Visibility = Visibility.Hidden;
-            VisitBookingButton.Visibility = Visibility.Hidden;
-
-            MainLable.Visibility = Visibility.Visible;
-            DocImage.Visibility = Visibility.Visible;
-            PIBLable.Visibility = Visibility.Visible;
-            ExperienceLable.Visibility = Visibility.Visible;
-            DegreeLable.Visibility = Visibility.Visible;
-            CommentsLable.Visibility = Visibility.Visible;
-            ScheduleDataGrid.Visibility = Visibility.Visible;
-            CommentsDataGrid.Visibility = Visibility.Visible;
-            DoctorsListDataGrid.Visibility = Visibility.Visible;
-            ScheduleLable.Visibility = Visibility.Visible;
-            BookingButton.Visibility = Visibility.Visible;
-            BackButton.Visibility = Visibility.Visible;
-
-            DoctorsListDataGrid.Items.Clear();
-
-            byte[] data = Encoding.Unicode.GetBytes("VisitBooking");
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
-
-            List<Doctor> docs = ObjectReBuilder.ReBuildDoctorFromBytes(transfer.TransferFuncByte(data));
-
-            for (int i = 0; i < docs.Count; i++)
-            {
-                DoctorsListDataGrid.Items.Add(docs[i]);
-            }
-        }
-
-        private void PayBillButton_Click(object sender, RoutedEventArgs e)
-        {
-            byte[] data = Encoding.Unicode.GetBytes("PayBill");
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-
-            Bill bill = (Bill)InfoTableDataGrid.SelectedItem;
-            data = data.Concat(Encoding.Unicode.GetBytes(bill.Name)).ToArray();
-
-            if(transfer.TransferFunc(data).Equals("PayBillTrue"))
-            {
-                MessageBox.Show("Сплата пройшла успішно");
-            }
-            else
-            {
-                MessageBox.Show("Сплата не виконана");
-            }
-        }
-
         private void MyVisitsButton_Click(object sender, RoutedEventArgs e)
         {
+            Col0.Width = GridLength.Auto;
+            Col1.Width = new GridLength(0);
+            Col2.Width = GridLength.Auto;
+
+            Row0.Height = GridLength.Auto;
+            Row1.Height = new GridLength(0);
+            Row2.Height = new GridLength(0);
+
             BillsButton.Visibility = Visibility.Hidden;
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
@@ -204,7 +189,10 @@ namespace DiplomClient
             textColumns[4] = new DataGridTextColumn();      // TODO: Замінити логін на КАБІНЕТ лікаря
             textColumns[4].Header = "Логін Лікаря";
             textColumns[4].Binding = new Binding("Login");
+            textColumns[4].Visibility = Visibility.Hidden;
             InfoTableDataGrid.Columns.Add(textColumns[4]);
+
+            // TODO: Додати колонку СТАТУС
 
             byte[] data = Encoding.Unicode.GetBytes("MyVisits");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
@@ -229,10 +217,82 @@ namespace DiplomClient
 
         }
 
+        private void LKButton_Click(object sender, RoutedEventArgs e)
+        {
+            Col0.Width = GridLength.Auto;
+            Col1.Width = new GridLength(0);
+            Col2.Width = GridLength.Auto;
+
+            Row0.Height = new GridLength(0);
+            Row1.Height = GridLength.Auto;
+            Row2.Height = new GridLength(0);
+
+            BillsButton.Visibility = Visibility.Hidden;
+            LKButton.Visibility = Visibility.Hidden;
+            MyVisitsButton.Visibility = Visibility.Hidden;
+            VisitBookingButton.Visibility = Visibility.Hidden;
+
+            LKRichTextBox.Visibility = Visibility.Visible;
+            BackButton.Visibility = Visibility.Visible;
+
+            byte[] data = Encoding.Unicode.GetBytes("LookLK");
+            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
+
+
+            LKRichTextBox.Document.Blocks.Clear();
+            LKRichTextBox.Document.Blocks.Add(new Paragraph(new Run(transfer.TransferFunc(data))));
+        }
+
+        private void PayBillButton_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] data = Encoding.Unicode.GetBytes("PayBill");
+            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
+            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+
+            Bill bill = (Bill)InfoTableDataGrid.SelectedItem;
+            data = data.Concat(Encoding.Unicode.GetBytes(bill.Name)).ToArray();
+
+            if(transfer.TransferFunc(data).Equals("PayBillTrue"))
+            {
+                MessageBox.Show("Сплата пройшла успішно");
+            }
+            else
+            {
+                MessageBox.Show("Сплата не виконана");
+            }
+        }
+
         private void DoctorsListDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
         {
             if (DoctorsListDataGrid.Items.Count != 0)
+            {
                 RefreshSchedule();
+                Doctor doc = (Doctor)DoctorsListDataGrid.SelectedItem;
+                PIBLable.Content = doc.Name + " " + doc.Surname;
+
+                Row1.Height = GridLength.Auto;
+                Row2.Height = GridLength.Auto;
+
+                PIBLable.Visibility = Visibility.Visible;
+                ExperienceLable.Visibility = Visibility.Visible;
+                DegreeLable.Visibility = Visibility.Visible;
+                CommentsLable.Visibility = Visibility.Visible;
+                ScheduleDataGrid.Visibility = Visibility.Visible;
+                CommentsDataGrid.Visibility = Visibility.Visible;
+                ScheduleLable.Visibility = Visibility.Visible;
+
+                BookingButton.Visibility = Visibility.Visible;
+
+                // TODO: Додати опрацювання досвіду та рейтингу
+
+                // TODO: Додати опрацювання коментарів
+            }
         }
 
         private void RefreshSchedule()
@@ -322,12 +382,21 @@ namespace DiplomClient
 
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
+            Col0.Width = GridLength.Auto;
+            Col1.Width = new GridLength(0);
+            Col2.Width = new GridLength(0);
+
+            Row0.Height = new GridLength(200);
+            Row1.Height = new GridLength(0);
+            Row2.Height = new GridLength(0);
+
             BillsButton.Visibility = Visibility.Visible;
             BookingButton.Visibility = Visibility.Visible;
             LKButton.Visibility = Visibility.Visible;
             MyVisitsButton.Visibility = Visibility.Visible;
             VisitBookingButton.Visibility = Visibility.Visible;
 
+            DocImage.Source = null;
             DocImage.Visibility = Visibility.Hidden;
             PIBLable.Visibility = Visibility.Hidden;
             ExperienceLable.Visibility = Visibility.Hidden;

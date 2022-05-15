@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using DiplomServer.Models;
 
 namespace DiplomServer.SubFuncs
 {
@@ -14,8 +15,8 @@ namespace DiplomServer.SubFuncs
                 string answerStr = "";
                 byte[] answer = new byte[0];
 
-                var dataDoc = iToothServ.Doctors.AsQueryable();
-                List<Doctor> docs = dataDoc.ToList();
+                var docs = iToothServ.Doctors.AsQueryable().ToList();
+
                 answer = answer.Concat(BitConverter.GetBytes(docs.Count())).ToArray();
 
                 for (int i = 0; i < docs.Count(); i++)
