@@ -12,7 +12,6 @@ namespace DiplomServer.SubFuncs
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {
-                string answerStr = "";
                 byte[] answer = new byte[0];
 
                 var docs = iToothServ.Doctors.AsQueryable().ToList();

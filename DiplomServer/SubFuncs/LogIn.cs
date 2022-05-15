@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
+using DiplomServer.Models;
 
 namespace DiplomServer.SubFuncs
 {

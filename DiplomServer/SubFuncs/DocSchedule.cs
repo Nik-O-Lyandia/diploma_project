@@ -19,7 +19,7 @@ namespace DiplomServer.SubFuncs
                 var dataDoc = iToothServ.Doctors.AsQueryable();
                 var dataPac = iToothServ.Pacients.AsQueryable();
 
-                List<Reseption> reseptions = dataRes.ToList();
+                List<Reseption> reseptions = iToothServ.Reseptions.AsQueryable().ToList();
                 List<string> docLogins = new List<string>();
                 List<string> pacLogins = new List<string>();
 
