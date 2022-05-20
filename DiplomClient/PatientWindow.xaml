@@ -104,16 +104,6 @@
 				Click="PayBillButton_Click"
 				Visibility="Hidden"
 				Height="20" />
-		<DataGrid x:Name="InfoTableDataGrid"
-				  Grid.Column="2"
-				  Grid.Row="0"
-				  IsReadOnly="True"
-				  Visibility="Hidden"
-				  HorizontalAlignment="Center"
-				  Height="371"
-				  VerticalAlignment="Top"
-				  Width="629"
-				  Margin="20,20,20,20" />
 
 		<Label x:Name="MainLable"
 			   Grid.Column="2"
@@ -181,6 +171,78 @@
 			   Visibility="Hidden"
 			   Margin="0,20,0,0" />
 
+		<DataGrid x:Name="MyBillsDataGrid"
+				  Grid.Column="2"
+				  Grid.Row="0"
+				  IsReadOnly="True"
+				  Visibility="Hidden"
+				  HorizontalAlignment="Center"
+				  Height="371"
+				  VerticalAlignment="Top"
+				  Width="629"
+				  Margin="20,20,20,20">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Дата видачі"
+									Binding="{Binding Date}" />
+				<DataGridTextColumn Header="Назва"
+									Binding="{Binding Name}" />
+				<DataGridTextColumn Header="Ціна"
+									Binding="{Binding Cost}" />
+				<DataGridTextColumn Header="ПІБ Лікаря"
+									Binding="{Binding PIB}" />
+				<DataGridTextColumn Header="Login"
+									Binding="{Binding Login}"
+									Visibility="Hidden" />
+			</DataGrid.Columns>
+		</DataGrid>
+		<DataGrid x:Name="MyVisitsDataGrid"
+				  Grid.Column="2"
+				  Grid.Row="0"
+				  IsReadOnly="True"
+				  Visibility="Hidden"
+				  HorizontalAlignment="Center"
+				  Height="371"
+				  VerticalAlignment="Top"
+				  Width="629"
+				  Margin="20,20,20,20">
+			<DataGrid.Columns>
+				<DataGridTextColumn Header="Дата прийому"
+									Binding="{Binding Date}" />
+				<DataGridTextColumn Header="Час прийому"
+									Binding="{Binding Time}" />
+				<DataGridTextColumn Header="ПІБ Лікаря"
+									Binding="{Binding PIB}" />
+				<DataGridTextColumn Header="Статус"
+									Binding="{Binding Status}">
+					<DataGridTextColumn.ElementStyle>
+						<Style TargetType="{x:Type TextBlock}">
+							<Style.Triggers>
+								<Trigger Property="Text"
+										 Value="Активний">
+									<Setter Property="Background"
+											Value="LightGreen" />
+								</Trigger>
+								<Trigger Property="Text"
+										 Value="Завершений">
+									<Setter Property="Background"
+											Value="LightYellow" />
+								</Trigger>
+								<Trigger Property="Text"
+										 Value="Не з'явився">
+									<Setter Property="Background"
+											Value="#FFFF7373" />
+								</Trigger>
+								<Trigger Property="Text"
+										 Value="Відмінений">
+									<Setter Property="Background"
+											Value="#FFA6A6A6" />
+								</Trigger>
+							</Style.Triggers>
+						</Style>
+					</DataGridTextColumn.ElementStyle>
+				</DataGridTextColumn>
+			</DataGrid.Columns>
+		</DataGrid>
 		<DataGrid x:Name="DoctorsListDataGrid"
 				  Grid.Column="2"
 				  Grid.Row="0"
@@ -204,6 +266,9 @@
 									Visibility="Hidden" />
 				<DataGridTextColumn Header="Experience"
 									Binding="{Binding Experience}"
+									Visibility="Hidden" />
+				<DataGridTextColumn Header="Rating"
+									Binding="{Binding Rating}"
 									Visibility="Hidden" />
 				<DataGridTextColumn Header="DocFoto"
 									Binding="{Binding DocFoto}"

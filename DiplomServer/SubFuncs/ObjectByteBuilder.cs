@@ -15,15 +15,17 @@ namespace DiplomServer.SubFuncs
     {
         public static byte[] BuildDoctorInBytes(Doctor doc)
         {
-            byte[] columnCount = BitConverter.GetBytes(6);
+            byte[] columnCount = BitConverter.GetBytes(8);
             byte[] docId = ToByteArrConverter.ToByteArr(doc.Id);
             byte[] docName = ToByteArrConverter.ToByteArr(doc.Name);
             byte[] docSurname = ToByteArrConverter.ToByteArr(doc.Surname);
             byte[] docLogin = ToByteArrConverter.ToByteArr(doc.Login);
+            byte[] docRoom = ToByteArrConverter.ToByteArr(doc.Room);
+            byte[] docRating = ToByteArrConverter.ToByteArr(doc.Rating);
             byte[] docExperience = ToByteArrConverter.ToByteArr(doc.Experience);
             byte[] docFoto = ToByteArrConverter.ToByteArr(doc.DocFoto);
 
-            return columnCount.Concat(docId).Concat(docName).Concat(docSurname).Concat(docLogin).Concat(docExperience).Concat(docFoto).ToArray();
+            return columnCount.Concat(docId).Concat(docName).Concat(docSurname).Concat(docLogin).Concat(docExperience).Concat(docRoom).Concat(docRating).Concat(docFoto).ToArray();
         }
 
         //    public static byte[] BuildPacientInBytes(Pacient pac)

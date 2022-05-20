@@ -35,11 +35,17 @@ namespace DiplomServer.SubFuncs
                         if (pacLogins[i] == dataStringArray[2])
                         {
                             int docId = reseptions[i].DoctorId;
+                            string status = "Невідомо";
+
+                            if (reseptions[i].Status == 1) status = "Активний";
+                            if (reseptions[i].Status == 2) status = "Завершений";
+                            if (reseptions[i].Status == 3) status = "Не з'явився";
+                            if (reseptions[i].Status == 4) status = "Відмінений";
 
                             answerStr += reseptions[i].Attendingdate.ToString() + "|" + 
                                 (9 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00-" + (10 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00" + "|" + 
                                 dataDoc.Single(d => d.Id == docId).Surname + " " + dataDoc.Single(d => d.Id == docId).Name + "|" +
-                                dataDoc.Single(d => d.Id == docId).Login + "$";
+                                status + "$";
                         }
                     }
                 }

@@ -88,41 +88,11 @@ namespace DiplomClient
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
 
-            InfoTableDataGrid.Visibility = Visibility.Visible;
+            MyBillsDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
             PayBillButton.Visibility = Visibility.Visible;
 
-            InfoTableDataGrid.Items.Clear();
-            InfoTableDataGrid.Columns.Clear();
-
-            textColumns = new DataGridTextColumn[5];
-            textColumns[0] = new DataGridTextColumn();
-            textColumns[0].Header = "Дата видачі";
-            textColumns[0].Binding = new Binding("Date");
-            InfoTableDataGrid.Columns.Add(textColumns[0]);
-
-            textColumns[1] = new DataGridTextColumn();
-            textColumns[1].Header = "Назва";
-            textColumns[1].Binding = new Binding("Name");
-            InfoTableDataGrid.Columns.Add(textColumns[1]);
-
-            textColumns[2] = new DataGridTextColumn();
-            textColumns[2].Header = "Ціна";
-            textColumns[2].Binding = new Binding("Cost");
-            InfoTableDataGrid.Columns.Add(textColumns[2]);
-
-            textColumns[3] = new DataGridTextColumn();
-            textColumns[3].Header = "ПІБ";
-            textColumns[3].Binding = new Binding("PIB");
-            InfoTableDataGrid.Columns.Add(textColumns[3]);
-
-            textColumns[4] = new DataGridTextColumn();      // TODO: Замінити логін на щось іще
-            textColumns[4].Header = "Логін";
-            textColumns[4].Binding = new Binding("Login");
-            textColumns[4].Visibility = Visibility.Hidden;
-            InfoTableDataGrid.Columns.Add(textColumns[4]);
-
-            // TODO: Додати колонку СТАТУС
+            MyBillsDataGrid.Items.Clear();
 
             byte[] data = Encoding.Unicode.GetBytes("MyBills");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
@@ -144,7 +114,7 @@ namespace DiplomClient
                     PIB = billData[i][3],
                     Login = billData[i][4]
                 };
-                InfoTableDataGrid.Items.Add(bill);
+                MyBillsDataGrid.Items.Add(bill);
             }
 
         }
@@ -164,35 +134,11 @@ namespace DiplomClient
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
 
-            InfoTableDataGrid.Visibility = Visibility.Visible;
+            PayBillButton.Visibility = Visibility.Visible;
+            MyVisitsDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
 
-            InfoTableDataGrid.Items.Clear();
-            InfoTableDataGrid.Columns.Clear();
-
-            textColumns = new DataGridTextColumn[5];
-            textColumns[0] = new DataGridTextColumn();
-            textColumns[0].Header = "Дата прийому";
-            textColumns[0].Binding = new Binding("Date");
-            InfoTableDataGrid.Columns.Add(textColumns[0]);
-
-            textColumns[1] = new DataGridTextColumn();
-            textColumns[1].Header = "Час прийому";
-            textColumns[1].Binding = new Binding("Time");
-            InfoTableDataGrid.Columns.Add(textColumns[1]);
-
-            textColumns[3] = new DataGridTextColumn();
-            textColumns[3].Header = "ПІБ Лікаря";
-            textColumns[3].Binding = new Binding("PIB");
-            InfoTableDataGrid.Columns.Add(textColumns[3]);
-
-            textColumns[4] = new DataGridTextColumn();      // TODO: Замінити логін на КАБІНЕТ лікаря
-            textColumns[4].Header = "Логін Лікаря";
-            textColumns[4].Binding = new Binding("Login");
-            textColumns[4].Visibility = Visibility.Hidden;
-            InfoTableDataGrid.Columns.Add(textColumns[4]);
-
-            // TODO: Додати колонку СТАТУС
+            MyVisitsDataGrid.Items.Clear();
 
             byte[] data = Encoding.Unicode.GetBytes("MyVisits");
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
@@ -210,9 +156,9 @@ namespace DiplomClient
                     Date = Convert.ToDateTime(visitData[i][0]).ToShortDateString(),
                     Time = visitData[i][1],
                     PIB = visitData[i][2],
-                    Login = visitData[i][3]
+                    Status = visitData[i][3]
                 };
-                InfoTableDataGrid.Items.Add(visit);
+                MyVisitsDataGrid.Items.Add(visit);
             }
 
         }
@@ -255,7 +201,7 @@ namespace DiplomClient
             data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
 
-            Bill bill = (Bill)InfoTableDataGrid.SelectedItem;
+            Bill bill = (Bill)MyBillsDataGrid.SelectedItem;
             data = data.Concat(Encoding.Unicode.GetBytes(bill.Name)).ToArray();
 
             if(transfer.TransferFunc(data).Equals("PayBillTrue"))
@@ -289,7 +235,9 @@ namespace DiplomClient
 
                 BookingButton.Visibility = Visibility.Visible;
 
-                // TODO: Додати опрацювання досвіду та рейтингу
+                ExperienceLable.Content = "Досвід: " + doc.Experience.ToString() + " р.";
+                DegreeLable.Content = "Рейтинг: " + doc.Rating.ToString();
+
 
                 // TODO: Додати опрацювання коментарів
             }
@@ -408,7 +356,8 @@ namespace DiplomClient
             ScheduleLable.Visibility = Visibility.Hidden;
             BookingButton.Visibility = Visibility.Hidden;
             MainLable.Visibility = Visibility.Hidden;
-            InfoTableDataGrid.Visibility = Visibility.Hidden;
+            MyBillsDataGrid.Visibility = Visibility.Hidden;
+            MyVisitsDataGrid.Visibility = Visibility.Hidden;
             PayBillButton.Visibility = Visibility.Hidden;
             LKRichTextBox.Visibility = Visibility.Hidden;
 
