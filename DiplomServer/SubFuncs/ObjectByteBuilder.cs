@@ -28,6 +28,18 @@ namespace DiplomServer.SubFuncs
             return columnCount.Concat(docId).Concat(docName).Concat(docSurname).Concat(docLogin).Concat(docExperience).Concat(docRoom).Concat(docRating).Concat(docFoto).ToArray();
         }
 
+        public static byte[] BuildCommentInBytes(Comment com, Pacient pac)
+        {
+            byte[] columnCount = BitConverter.GetBytes(5);
+            byte[] comId = ToByteArrConverter.ToByteArr(com.Id);
+            byte[] comDate = ToByteArrConverter.ToByteArr(com.Date);
+            byte[] comRating = ToByteArrConverter.ToByteArr(com.Rating);
+            byte[] comText = ToByteArrConverter.ToByteArr(com.CommentText);
+            byte[] pacPIB = ToByteArrConverter.ToByteArr(pac.Name+" "+pac.Surname);
+
+            return columnCount.Concat(comId).Concat(comDate).Concat(comRating).Concat(comText).Concat(pacPIB).ToArray();
+        }
+
         //    public static byte[] BuildPacientInBytes(Pacient pac)
         //    {
         //        byte[] docId = ToByteArrConverter.ToByteArr(doc.Id);

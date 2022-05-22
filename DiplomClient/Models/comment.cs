@@ -11,5 +11,6 @@ namespace DiplomClient
         public string CommentText { get; set; }
         public int PacientId { get; set; }
         public int DoctorId { get; set; }
+        public string PacientPIB { get; set; }
     }
 }

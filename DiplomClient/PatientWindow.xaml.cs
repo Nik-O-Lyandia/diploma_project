@@ -7,6 +7,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Documents;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using DiplomClient.SubFuncs;
 
@@ -19,7 +20,6 @@ namespace DiplomClient
     {
         Transfer transfer = new Transfer();
         private string UserLogin;
-        DataGridTextColumn[] textColumns;
 
         public PatientWindow(string login)
         {
@@ -134,7 +134,6 @@ namespace DiplomClient
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
 
-            PayBillButton.Visibility = Visibility.Visible;
             MyVisitsDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
 
@@ -199,7 +198,6 @@ namespace DiplomClient
             data = data.Concat(Encoding.Unicode.GetBytes("Пацієнт")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
             data = data.Concat(Encoding.Unicode.GetBytes(UserLogin)).ToArray();
-            data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
 
             Bill bill = (Bill)MyBillsDataGrid.SelectedItem;
             data = data.Concat(Encoding.Unicode.GetBytes(bill.Name)).ToArray();
@@ -220,9 +218,86 @@ namespace DiplomClient
             {
                 RefreshSchedule();
                 Doctor doc = (Doctor)DoctorsListDataGrid.SelectedItem;
-                PIBLable.Content = doc.Name + " " + doc.Surname;
 
-                Row1.Height = GridLength.Auto;
+                CommentsDataGrid.Items.Clear();
+
+                byte[] data = Encoding.Unicode.GetBytes("GetComments");
+                data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+                data = data.Concat(Encoding.Unicode.GetBytes(doc.Id.ToString())).ToArray();
+
+                List<Comment> coms = ObjectReBuilder.ReBuildCommentFromBytes(transfer.TransferFuncByte(data));
+                StackPanel commentsStackPanel = new StackPanel();
+                commentsStackPanel.HorizontalAlignment = HorizontalAlignment.Center;
+                commentsStackPanel.VerticalAlignment = VerticalAlignment.Top;
+                commentsStackPanel.Width = CommentsScrollViewer.Width;
+                double ratingSum = 0;
+
+                for (int i = 0; i < coms.Count; i++)
+                {
+                    DockPanel commentObjectDockPanel = new DockPanel();
+                    commentObjectDockPanel.Width = commentsStackPanel.Width;
+
+                    TextBlock commetTextTextBlock = new TextBlock();
+                    TextBlock commetPIBTextBlock = new TextBlock();
+                    TextBlock commetRatingTextBlock = new TextBlock();
+
+                    Thickness myThickness = new Thickness();
+
+                    commetTextTextBlock.Text = coms[i].CommentText;
+                    commetTextTextBlock.Background = new SolidColorBrush(Colors.Aquamarine);
+                    commetTextTextBlock.TextWrapping = TextWrapping.Wrap;
+                    myThickness.Bottom = 0;
+                    myThickness.Left = 0;
+                    myThickness.Right = 18;
+                    myThickness.Top = 0;
+                    commetTextTextBlock.Margin = myThickness;
+
+                    commetPIBTextBlock.Text = coms[i].PacientPIB;
+                    commetPIBTextBlock.Background = new SolidColorBrush(Colors.Aquamarine);
+                    commetPIBTextBlock.TextWrapping = TextWrapping.Wrap;
+                    commetPIBTextBlock.HorizontalAlignment = HorizontalAlignment.Left;
+                    myThickness.Bottom = 5;
+                    myThickness.Left = 2;
+                    myThickness.Right = 0;
+                    myThickness.Top = 0;
+                    commetPIBTextBlock.Margin = myThickness;
+
+                    commetRatingTextBlock.Text = "Оцінка: " + coms[i].Rating.ToString();
+                    commetRatingTextBlock.Background = new SolidColorBrush(Colors.Aquamarine);
+                    commetRatingTextBlock.TextWrapping = TextWrapping.Wrap;
+                    commetRatingTextBlock.HorizontalAlignment = HorizontalAlignment.Right;
+                    myThickness.Bottom = 5;
+                    myThickness.Left = 0;
+                    myThickness.Right = 18;
+                    myThickness.Top = 0;
+                    commetRatingTextBlock.Margin = myThickness;
+
+                    DockPanel.SetDock(commetTextTextBlock, Dock.Bottom);
+                    DockPanel.SetDock(commetPIBTextBlock, Dock.Left);
+                    DockPanel.SetDock(commetRatingTextBlock, Dock.Right);
+                    commentObjectDockPanel.Children.Add(commetTextTextBlock);
+                    commentObjectDockPanel.Children.Add(commetPIBTextBlock);
+                    commentObjectDockPanel.Children.Add(commetRatingTextBlock);
+
+                    myThickness.Bottom = 10;
+                    myThickness.Left = 0;
+                    myThickness.Right = 0;
+                    myThickness.Top = 0;
+                    commentObjectDockPanel.Margin = myThickness;
+
+                    commentsStackPanel.Children.Add(commentObjectDockPanel);
+
+                    CommentsDataGrid.Items.Add(coms[i]);
+                    ratingSum += coms[i].Rating;
+                }
+
+                CommentsScrollViewer.Content = commentsStackPanel;
+
+                PIBLable.Content = doc.Name + " " + doc.Surname;
+                ExperienceLable.Content = "Досвід: " + doc.Experience.ToString() + " р.";
+                DegreeLable.Content = "Рейтинг: " + (ratingSum/ coms.Count).ToString();
+
+                Row1.Height = new GridLength(ScheduleDataGrid.Height + ScheduleDataGrid.Margin.Top + ScheduleDataGrid.Margin.Bottom);
                 Row2.Height = GridLength.Auto;
 
                 PIBLable.Visibility = Visibility.Visible;
@@ -230,14 +305,9 @@ namespace DiplomClient
                 DegreeLable.Visibility = Visibility.Visible;
                 CommentsLable.Visibility = Visibility.Visible;
                 ScheduleDataGrid.Visibility = Visibility.Visible;
-                CommentsDataGrid.Visibility = Visibility.Visible;
                 ScheduleLable.Visibility = Visibility.Visible;
 
                 BookingButton.Visibility = Visibility.Visible;
-
-                ExperienceLable.Content = "Досвід: " + doc.Experience.ToString() + " р.";
-                DegreeLable.Content = "Рейтинг: " + doc.Rating.ToString();
-
 
                 // TODO: Додати опрацювання коментарів
             }

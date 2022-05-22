@@ -22,6 +22,7 @@ namespace DiplomServer
         static MyPacients myPacients = new MyPacients();
         static EditLK editLK = new EditLK();
         static AddBill addBill = new AddBill();
+        static Comments getComments = new Comments();
 
         static void Main(string[] args)
         {
@@ -255,7 +256,23 @@ namespace DiplomServer
                         sendData = "AddBillFalse";
                     }
                 }
-                if (!dataStringArray[0].Equals("VisitBooking"))
+
+                //---------------------Завантаження коментарів------------------------
+                if (dataStringArray[0].Equals("GetComments"))
+                {
+                    ResultByteArr = getComments.GetCommentsFunc(dataStringArray);
+
+                    if (ResultByteArr.Length != 0 || ResultByteArr != null)
+                    {
+                        listener.Send(ResultByteArr);
+                    }
+                    else
+                    {
+                        sendData = "VisitBookingError";
+                    }
+                }
+
+                if (!dataStringArray[0].Equals("VisitBooking") && !dataStringArray[0].Equals("GetComments"))
                     listener.Send(Encoding.Unicode.GetBytes(sendData));
 
                 listener.Shutdown(SocketShutdown.Both);
