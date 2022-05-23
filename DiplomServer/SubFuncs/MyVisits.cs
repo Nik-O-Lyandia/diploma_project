@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DiplomServer.Models;
 
 namespace DiplomServer.SubFuncs
 {
     class MyVisits
     {
-        public string MyVisitsFunc(string[] dataStringArray)
+        public static string MyVisitsFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {
@@ -42,7 +40,8 @@ namespace DiplomServer.SubFuncs
                             if (reseptions[i].Status == 3) status = "Не з'явився";
                             if (reseptions[i].Status == 4) status = "Відмінений";
 
-                            answerStr += reseptions[i].Attendingdate.ToString() + "|" + 
+                            answerStr += reseptions[i].Id.ToString() + "|" + 
+                                reseptions[i].Attendingdate.ToString() + "|" + 
                                 (9 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00-" + (10 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00" + "|" + 
                                 dataDoc.Single(d => d.Id == docId).Surname + " " + dataDoc.Single(d => d.Id == docId).Name + "|" +
                                 status + "$";

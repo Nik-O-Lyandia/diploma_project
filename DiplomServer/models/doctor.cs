@@ -25,7 +25,6 @@ namespace DiplomServer.Models
         public int? Experience { get; set; }
         public byte[] DocFoto { get; set; }
         public string Room { get; set; }
-        public decimal Rating { get; set; }
 
         public virtual ICollection<Bill> Bills { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using DiplomClient.SubFuncs;
 
 namespace DiplomClient
@@ -29,7 +26,7 @@ namespace DiplomClient
             Col1.Width = new GridLength(0);
             Col2.Width = new GridLength(0);
 
-            Row0.Height = new GridLength(200);
+            Row0.Height = new GridLength(260);
             Row1.Height = new GridLength(0);
             Row2.Height = new GridLength(0);
 
@@ -50,6 +47,7 @@ namespace DiplomClient
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
+            ExitButton.Visibility = Visibility.Hidden;
 
             MainLable.Visibility = Visibility.Visible;
             DocImage.Visibility = Visibility.Visible;
@@ -87,6 +85,7 @@ namespace DiplomClient
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
+            ExitButton.Visibility = Visibility.Hidden;
 
             MyBillsDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
@@ -133,6 +132,7 @@ namespace DiplomClient
             LKButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
+            ExitButton.Visibility = Visibility.Hidden;
 
             MyVisitsDataGrid.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
@@ -152,10 +152,11 @@ namespace DiplomClient
                 visitData[i] = answerData[i].Split('|');
                 Reseption visit = new Reseption()
                 {
-                    Date = Convert.ToDateTime(visitData[i][0]).ToShortDateString(),
-                    Time = visitData[i][1],
-                    PIB = visitData[i][2],
-                    Status = visitData[i][3]
+                    Id = Convert.ToInt32(visitData[i][0]),
+                    Date = Convert.ToDateTime(visitData[i][1]).ToShortDateString(),
+                    Time = visitData[i][2],
+                    PIB = visitData[i][3],
+                    Status = visitData[i][4]
                 };
                 MyVisitsDataGrid.Items.Add(visit);
             }
@@ -174,6 +175,7 @@ namespace DiplomClient
 
             BillsButton.Visibility = Visibility.Hidden;
             LKButton.Visibility = Visibility.Hidden;
+            ExitButton.Visibility = Visibility.Hidden;
             MyVisitsButton.Visibility = Visibility.Hidden;
             VisitBookingButton.Visibility = Visibility.Hidden;
 
@@ -191,6 +193,11 @@ namespace DiplomClient
             LKRichTextBox.Document.Blocks.Add(new Paragraph(new Run(transfer.TransferFunc(data))));
         }
 
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
         private void PayBillButton_Click(object sender, RoutedEventArgs e)
         {
             byte[] data = Encoding.Unicode.GetBytes("PayBill");
@@ -202,7 +209,7 @@ namespace DiplomClient
             Bill bill = (Bill)MyBillsDataGrid.SelectedItem;
             data = data.Concat(Encoding.Unicode.GetBytes(bill.Name)).ToArray();
 
-            if(transfer.TransferFunc(data).Equals("PayBillTrue"))
+            if(transfer.TransferFunc(data).Equals("True"))
             {
                 MessageBox.Show("Сплата пройшла успішно");
             }
@@ -308,8 +315,6 @@ namespace DiplomClient
                 ScheduleLable.Visibility = Visibility.Visible;
 
                 BookingButton.Visibility = Visibility.Visible;
-
-                // TODO: Додати опрацювання коментарів
             }
         }
 
@@ -320,7 +325,7 @@ namespace DiplomClient
             Doctor doc = (Doctor)DoctorsListDataGrid.SelectedItem;
             DateTime dateTimeNow = DateTime.Now;
             string time = "";
-            DocImage.Source = LoadImage(doc.DocFoto);
+            DocImage.Source = LoadImage.LoadImageFunc(doc.DocFoto);
 
             for (int i = 0; i < 55; i++)
             {
@@ -387,7 +392,7 @@ namespace DiplomClient
             data = data.Concat(Encoding.Unicode.GetBytes(reseption.TimeId.ToString())).ToArray();
 
 
-            if (transfer.TransferFunc(data).Equals("BookingTrue"))
+            if (transfer.TransferFunc(data).Equals("True"))
             {
                 MessageBox.Show("Запис успішно створено");
                 RefreshSchedule();
@@ -404,7 +409,7 @@ namespace DiplomClient
             Col1.Width = new GridLength(0);
             Col2.Width = new GridLength(0);
 
-            Row0.Height = new GridLength(200);
+            Row0.Height = new GridLength(260);
             Row1.Height = new GridLength(0);
             Row2.Height = new GridLength(0);
 
@@ -413,6 +418,7 @@ namespace DiplomClient
             LKButton.Visibility = Visibility.Visible;
             MyVisitsButton.Visibility = Visibility.Visible;
             VisitBookingButton.Visibility = Visibility.Visible;
+            ExitButton.Visibility = Visibility.Visible;
 
             DocImage.Source = null;
             DocImage.Visibility = Visibility.Hidden;
@@ -430,31 +436,55 @@ namespace DiplomClient
             MyVisitsDataGrid.Visibility = Visibility.Hidden;
             PayBillButton.Visibility = Visibility.Hidden;
             LKRichTextBox.Visibility = Visibility.Hidden;
+            DeleteVisitButton.Visibility = Visibility.Hidden;
 
             BackButton.Visibility = Visibility.Hidden;
-
-            
         }
 
-        private static BitmapImage LoadImage(byte[] imageData)
+        private void DeleteVisitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (imageData == null || imageData.Length == 0) return null;
-            var image = new BitmapImage();
-            using (var mem = new MemoryStream(imageData))
+            Reseption res = (Reseption)MyVisitsDataGrid.SelectedItem;
+            if (res.Status == "Активний")
             {
-                mem.Position = 0;
-                image.BeginInit();
-                image.CreateOptions = BitmapCreateOptions.PreservePixelFormat;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.UriSource = null;
-                image.StreamSource = mem;
-                image.EndInit();
+                string sMessageBoxText = "Ви дійсно хочете видалити запис?";
+                string sCaption = "Попередження";
+
+                MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+                MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+                MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+
+                switch (rsltMessageBox)
+                {
+                    case MessageBoxResult.Yes:
+                        byte[] data = Encoding.Unicode.GetBytes("DeleteReseption");
+                        data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+                        data = data.Concat(Encoding.Unicode.GetBytes(res.Id.ToString())).ToArray();
+
+                        if (transfer.TransferFunc(data).Equals("True"))
+                        {
+                            MessageBox.Show("Візит успішно відмінено");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Відмінити візит не вдалось. Спробуйте будь ласка пізніше");
+                        }
+                        break;
+
+                    case MessageBoxResult.No:
+                        break;
+                }
             }
-            image.Freeze();
-            return image;
+            else
+            {
+                MessageBox.Show("Обраний запис не є активним");
+            }
         }
 
-        // TODO: добавить обработку КОМЕНТАРИЕВ, ОЦЕНКИ и ОПЫТА РОБОТЫ
+        private void MyVisitsDataGrid_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+            DeleteVisitButton.Visibility = Visibility.Visible;
+        }
     }
 
 }

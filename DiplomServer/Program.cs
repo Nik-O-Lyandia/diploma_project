@@ -9,21 +9,6 @@ namespace DiplomServer
 {
     class Program
     {
-        static SignIn signIn = new SignIn();
-        static LogIn logIn = new LogIn();
-        static LookLK lookLK = new LookLK();
-        static MyBills myBills = new MyBills(); 
-        static MyVisits myVisits = new MyVisits();
-        static PayBill payBill = new PayBill(); 
-        static VisitBooking visitBooking = new VisitBooking();
-        static DocSchedule docSchedule = new DocSchedule();
-        static Booking booking = new Booking();
-        static FixPacient fixPacient = new FixPacient(); 
-        static MyPacients myPacients = new MyPacients();
-        static EditLK editLK = new EditLK();
-        static AddBill addBill = new AddBill();
-        static Comments getComments = new Comments();
-
         static void Main(string[] args)
         {
             const string ip = "127.0.0.1";
@@ -65,22 +50,22 @@ namespace DiplomServer
                 //---------------------Вхід в систему------------------------
                 if (dataStringArray[0].Equals("LogIn"))
                 {
-                    boolAnswer = logIn.LogInFunc(dataStringArray);
+                    boolAnswer = LogIn.LogInFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "LogInTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "LogInFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Реєстрація в системі------------------------
                 if (dataStringArray[0].Equals("SignIn"))
                 {
-                    ResultStr = signIn.SignInFunc(dataStringArray);
+                    ResultStr = SignIn.SignInFunc(dataStringArray);
 
                     if (ResultStr.Equals("True"))
                     {
@@ -95,7 +80,7 @@ namespace DiplomServer
                 //---------------------Перегляд ЛК------------------------
                 if (dataStringArray[0].Equals("LookLK"))
                 {
-                    ResultStr = lookLK.LookLKFunc(dataStringArray);
+                    ResultStr = LookLK.LookLKFunc(dataStringArray);
 
                     if (!ResultStr.Equals(""))
                     {
@@ -110,7 +95,7 @@ namespace DiplomServer
                 //---------------------Перегляд рахунків------------------------
                 if (dataStringArray[0].Equals("MyBills"))
                 {
-                    ResultStr = myBills.MyBillsFunc(dataStringArray);
+                    ResultStr = MyBills.MyBillsFunc(dataStringArray);
 
                     if (!ResultStr.Equals(""))
                     {
@@ -125,7 +110,7 @@ namespace DiplomServer
                 //---------------------Перегляд візитів------------------------
                 if (dataStringArray[0].Equals("MyVisits"))
                 {
-                    ResultStr = myVisits.MyVisitsFunc(dataStringArray);
+                    ResultStr = MyVisits.MyVisitsFunc(dataStringArray);
 
                     if (!ResultStr.Equals(""))
                     {
@@ -140,22 +125,22 @@ namespace DiplomServer
                 //---------------------Сплата рахунку------------------------
                 if (dataStringArray[0].Equals("PayBill"))
                 {
-                    boolAnswer = payBill.PayBillFunc(dataStringArray);
+                    boolAnswer = PayBill.PayBillFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "PayBillTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "PayBillFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Запис на прийом------------------------
                 if (dataStringArray[0].Equals("VisitBooking"))
                 {
-                    ResultByteArr = visitBooking.VisitBookingFunc(dataStringArray);
+                    ResultByteArr = VisitBooking.VisitBookingFunc(dataStringArray);
 
                     if (ResultByteArr.Length != 0 || ResultByteArr != null)
                     {
@@ -170,7 +155,7 @@ namespace DiplomServer
                 //---------------------Розклад лікаря------------------------
                 if (dataStringArray[0].Equals("DocSchedule"))
                 {
-                    ResultStr = docSchedule.DocScheduleFunc(dataStringArray);
+                    ResultStr = DocSchedule.DocScheduleFunc(dataStringArray);
 
                     if (!ResultStr.Equals(""))
                     {
@@ -185,37 +170,37 @@ namespace DiplomServer
                 //---------------------Бронювання візиту------------------------
                 if (dataStringArray[0].Equals("Booking"))
                 {
-                    boolAnswer = booking.BookingFunc(dataStringArray);
+                    boolAnswer = Booking.BookingFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "BookingTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "BookingFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Закріплення пацієнта за доктором------------------------
                 if (dataStringArray[0].Equals("FixPacient"))
                 {
-                    boolAnswer = fixPacient.FixPacientFunc(dataStringArray);
+                    boolAnswer = FixPacient.FixPacientFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "FixPacientTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "FixPacientFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Перегляд закріплених пацієнтів------------------------
                 if (dataStringArray[0].Equals("MyPacients"))
                 {
-                    ResultStr = myPacients.MyPacientsFunc(dataStringArray);
+                    ResultStr = MyPacients.MyPacientsFunc(dataStringArray);
 
                     if (!ResultStr.Equals(""))
                     {
@@ -230,37 +215,37 @@ namespace DiplomServer
                 //---------------------Редагування ЛК------------------------
                 if (dataStringArray[0].Equals("EditLK"))
                 {
-                    boolAnswer = editLK.EditLKFunc(dataStringArray);
+                    boolAnswer = EditLK.EditLKFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "EditLKTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "EditLKFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Додавання рахунку------------------------
                 if (dataStringArray[0].Equals("AddBill"))
                 {
-                    boolAnswer = addBill.AddBillFunc(dataStringArray);
+                    boolAnswer = AddBill.AddBillFunc(dataStringArray);
 
                     if (boolAnswer)
                     {
-                        sendData = "AddBillTrue";
+                        sendData = "True";
                     }
                     else
                     {
-                        sendData = "AddBillFalse";
+                        sendData = "False";
                     }
                 }
 
                 //---------------------Завантаження коментарів------------------------
                 if (dataStringArray[0].Equals("GetComments"))
                 {
-                    ResultByteArr = getComments.GetCommentsFunc(dataStringArray);
+                    ResultByteArr = Comments.GetCommentsFunc(dataStringArray);
 
                     if (ResultByteArr.Length != 0 || ResultByteArr != null)
                     {
@@ -269,6 +254,21 @@ namespace DiplomServer
                     else
                     {
                         sendData = "VisitBookingError";
+                    }
+                }
+
+                //---------------------Видалення запису------------------------
+                if (dataStringArray[0].Equals("DeleteReseption"))
+                {
+                    boolAnswer = DeleteReseption.DeleteReseptionFunc(dataStringArray);
+
+                    if (boolAnswer)
+                    {
+                        sendData = "True";
+                    }
+                    else
+                    {
+                        sendData = "False";
                     }
                 }
 

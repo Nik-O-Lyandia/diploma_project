@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class EditLK
     {
-        public bool EditLKFunc(string[] dataStringArray)
+        public static bool EditLKFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

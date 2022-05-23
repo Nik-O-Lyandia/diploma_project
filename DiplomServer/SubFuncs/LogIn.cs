@@ -7,7 +7,7 @@ namespace DiplomServer.SubFuncs
 {
     class LogIn
     {
-        public bool LogInFunc(string[] dataStringArray)
+        public static bool LogInFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

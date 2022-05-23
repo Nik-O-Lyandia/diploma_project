@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class MyPacients
     {
-        public string MyPacientsFunc(string[] dataStringArray)
+        public static string MyPacientsFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

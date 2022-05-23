@@ -12,6 +12,5 @@
         public int? Experience { get; set; }
         public byte[] DocFoto { get; set; }
         public string Room { get; set; }
-        public double Rating { get; set; }
     }
 }

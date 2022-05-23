@@ -23,3 +23,5 @@ C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\DiplomClient.csproj.Cor
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\DiplomClient.exe
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\DiplomClient.pdb
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\DiplomClient.csproj.AssemblyReference.cache
+C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\AreYouSureWindow.g.cs
+C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\obj\Debug\AreYouSureWindow.baml

@@ -13,7 +13,6 @@ namespace DiplomClient.SubFuncs
             int lastByte = 0;
             int docId = 0, docExperience = 0, answerElementsCount, constraintCount;
             string docName = "", docSurname = "", docLogin = "", docRoom = "";
-            double docRating = 0;
             byte[] docFoto = new byte[0];
             List<Doctor> docs = new List<Doctor>();
 
@@ -43,8 +42,6 @@ namespace DiplomClient.SubFuncs
                     if (j == 5)
                         docRoom = Encoding.Unicode.GetString(answer.Skip(lastByte).Take(columnLength).ToArray());
                     if (j == 6)
-                        docRating = BitConverter.ToDouble(answer.Skip(lastByte).Take(columnLength).ToArray(), 0);
-                    if (j == 7)
                         docFoto = answer.Skip(lastByte).Take(columnLength).ToArray();
 
                     lastByte = lastByte + columnLength;
@@ -57,7 +54,6 @@ namespace DiplomClient.SubFuncs
                     Login = docLogin,
                     Experience = docExperience,
                     Room = docRoom,
-                    Rating = docRating,
                     DocFoto = docFoto
                 });
             }

@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class AddBill
     {
-        public bool AddBillFunc(string[] dataStringArray)
+        public static bool AddBillFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

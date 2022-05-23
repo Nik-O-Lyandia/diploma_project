@@ -55,6 +55,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AreYouSureWindow.xaml.cs">
+      <DependentUpon>AreYouSureWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EditVisit.xaml.cs">
       <DependentUpon>EditVisit.xaml</DependentUpon>
     </Compile>
@@ -63,6 +66,7 @@
     <Compile Include="Models\doctor.cs" />
     <Compile Include="Models\pacient.cs" />
     <Compile Include="Models\reseption.cs" />
+    <Compile Include="SubFuncs\LoadImage.cs" />
     <Compile Include="SubFuncs\ObjectReBuilder.cs" />
     <Compile Include="Transfer.cs" />
     <Page Include="AddBill.xaml">
@@ -70,6 +74,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="AddVisit.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="AreYouSureWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

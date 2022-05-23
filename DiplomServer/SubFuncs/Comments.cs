@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class Comments
     {
-        public byte[] GetCommentsFunc(string[] dataStringArray)
+        public static byte[] GetCommentsFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

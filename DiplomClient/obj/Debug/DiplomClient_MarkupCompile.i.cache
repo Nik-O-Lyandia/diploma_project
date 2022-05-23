@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomClient\App.xaml
-6710273626
+7-345568814
 
-18985692122
+20-1867066246
 13-1505183044
-AddBill.xaml;AddVisit.xaml;DoctorWindow.xaml;EditVisit.xaml;MainWindow.xaml;PatientWindow.xaml;
+AddBill.xaml;AddVisit.xaml;AreYouSureWindow.xaml;DoctorWindow.xaml;EditVisit.xaml;MainWindow.xaml;PatientWindow.xaml;
 
 True
 

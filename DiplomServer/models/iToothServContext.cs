@@ -149,10 +149,6 @@ namespace DiplomServer.Models
 
                 entity.Property(e => e.PasswordHash).HasColumnName("passwordHash");
 
-                entity.Property(e => e.Rating)
-                    .HasColumnType("decimal(3, 2)")
-                    .HasColumnName("rating");
-
                 entity.Property(e => e.Room)
                     .IsRequired()
                     .HasMaxLength(3)

@@ -8,7 +8,7 @@ namespace DiplomServer.SubFuncs
 {
     class VisitBooking
     {
-        public byte[] VisitBookingFunc(string[] dataStringArray)
+        public static byte[] VisitBookingFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

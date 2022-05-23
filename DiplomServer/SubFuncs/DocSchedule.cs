@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class DocSchedule
     {
-        public string DocScheduleFunc(string[] dataStringArray)
+        public static string DocScheduleFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

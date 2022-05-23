@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class Booking
     {
-        public bool BookingFunc(string[] dataStringArray)
+        public static bool BookingFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {
@@ -21,7 +21,8 @@ namespace DiplomServer.SubFuncs
                     PacientId = dataPac.Single(p => p.Login == dataStringArray[1]).Id,
                     DoctorId = dataDoc.Single(p => p.Login == dataStringArray[2]).Id,
                     Attendingdate = Convert.ToDateTime(dataStringArray[3]),
-                    Time = dataStringArray[4]
+                    Time = dataStringArray[4],
+                    Status = 1
                 });
 
                 try

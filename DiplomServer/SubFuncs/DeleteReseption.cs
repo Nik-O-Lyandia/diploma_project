@@ -1,23 +1,25 @@
-﻿using System;
+﻿using DiplomServer.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DiplomServer.Models;
 
 namespace DiplomServer.SubFuncs
 {
-    class PayBill
+    class DeleteReseption
     {
-        public static bool PayBillFunc(string[] dataStringArray)
+        public static bool DeleteReseptionFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {
-                var query = (from b in iToothServ.Bills where b.Name == dataStringArray[3] select b).First();
+                int id = Convert.ToInt32(dataStringArray[1]);
+                Reseption res = iToothServ.Reseptions.Single(r => r.Id == id);
 
-                query.Paied = "1";
                 try
                 {
+                    res.Status = 4;
+
                     iToothServ.SaveChanges();
                     return true;
                 }

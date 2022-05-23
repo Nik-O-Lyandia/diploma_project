@@ -9,7 +9,7 @@ namespace DiplomServer.SubFuncs
 {
     class LookLK
     {
-        public string LookLKFunc(string[] dataStringArray)
+        public static string LookLKFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {

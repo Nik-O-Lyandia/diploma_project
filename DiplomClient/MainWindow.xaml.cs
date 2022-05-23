@@ -159,7 +159,7 @@ namespace DiplomClient
 
                 //Console.WriteLine(hesh);
 
-                if( transfer.TransferFunc(data).Equals("LogInTrue") )
+                if( transfer.TransferFunc(data).Equals("True") )
                 {
                     if (WhoAreYouComboBox.Text.Equals("Пацієнт"))
                     {
