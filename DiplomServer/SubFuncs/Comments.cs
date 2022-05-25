@@ -14,8 +14,8 @@ namespace DiplomServer.SubFuncs
             using (iToothServContext iToothServ = new iToothServContext())
             {
                 byte[] answer = new byte[0];
-                
-                var coms = iToothServ.Comments.Where(c => c.DoctorId == Convert.ToInt32(dataStringArray[1])).ToList();
+                var doc = iToothServ.Doctors.Single(d => d.Login == dataStringArray[1]);
+                var coms = iToothServ.Comments.Where(c => c.DoctorId == doc.Id).ToList();
 
                 answer = answer.Concat(BitConverter.GetBytes(coms.Count())).ToArray();
 

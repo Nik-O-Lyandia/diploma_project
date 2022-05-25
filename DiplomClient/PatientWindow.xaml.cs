@@ -226,11 +226,9 @@ namespace DiplomClient
                 RefreshSchedule();
                 Doctor doc = (Doctor)DoctorsListDataGrid.SelectedItem;
 
-                CommentsDataGrid.Items.Clear();
-
                 byte[] data = Encoding.Unicode.GetBytes("GetComments");
                 data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
-                data = data.Concat(Encoding.Unicode.GetBytes(doc.Id.ToString())).ToArray();
+                data = data.Concat(Encoding.Unicode.GetBytes(doc.Login)).ToArray();
 
                 List<Comment> coms = ObjectReBuilder.ReBuildCommentFromBytes(transfer.TransferFuncByte(data));
                 StackPanel commentsStackPanel = new StackPanel();
@@ -294,7 +292,6 @@ namespace DiplomClient
 
                     commentsStackPanel.Children.Add(commentObjectDockPanel);
 
-                    CommentsDataGrid.Items.Add(coms[i]);
                     ratingSum += coms[i].Rating;
                 }
 
@@ -427,7 +424,6 @@ namespace DiplomClient
             DegreeLable.Visibility = Visibility.Hidden;
             CommentsLable.Visibility = Visibility.Hidden;
             ScheduleDataGrid.Visibility = Visibility.Hidden;
-            CommentsDataGrid.Visibility = Visibility.Hidden;
             DoctorsListDataGrid.Visibility = Visibility.Hidden;
             ScheduleLable.Visibility = Visibility.Hidden;
             BookingButton.Visibility = Visibility.Hidden;

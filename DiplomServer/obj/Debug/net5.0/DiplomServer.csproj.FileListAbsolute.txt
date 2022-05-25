@@ -61,3 +61,4 @@ C:\Kolya\Proging\C#\diplom\Diplom\DiplomServer\bin\Debug\net5.0\DiplomServer.run
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomServer\bin\Debug\net5.0\ref\DiplomServer.dll
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomServer\bin\Debug\net5.0\DiplomServer.pdb
 C:\Kolya\Proging\C#\diplom\Diplom\DiplomServer\obj\Debug\net5.0\DiplomServer.genruntimeconfig.cache
+C:\Kolya\Proging\C#\diplom\Diplom\DiplomServer\obj\Debug\net5.0\DiplomServer.csproj.AssemblyReference.cache
