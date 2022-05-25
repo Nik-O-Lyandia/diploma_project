@@ -453,7 +453,7 @@ namespace DiplomClient
                 switch (rsltMessageBox)
                 {
                     case MessageBoxResult.Yes:
-                        byte[] data = Encoding.Unicode.GetBytes("DeleteReseption");
+                        byte[] data = Encoding.Unicode.GetBytes("CancelReseption");
                         data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
                         data = data.Concat(Encoding.Unicode.GetBytes(res.Id.ToString())).ToArray();
 

@@ -40,6 +40,7 @@ namespace DiplomClient
             LookScheduleButton.Visibility = Visibility.Hidden;
             MyPacientsButton.Visibility = Visibility.Hidden;
             BillsButton.Visibility = Visibility.Hidden;
+            CommentsButton.Visibility = Visibility.Hidden;
             ExitButton.Visibility = Visibility.Hidden;
 
             FixPacientButton.Visibility = Visibility.Visible;
@@ -214,6 +215,7 @@ namespace DiplomClient
             LookScheduleButton.Visibility = Visibility.Hidden;
             MyPacientsButton.Visibility = Visibility.Hidden;
             BillsButton.Visibility = Visibility.Hidden;
+            CommentsButton.Visibility = Visibility.Hidden;
             ExitButton.Visibility = Visibility.Hidden;
 
             EditLKButton.Visibility = Visibility.Visible;
@@ -323,13 +325,11 @@ namespace DiplomClient
 
                 if (transfer.TransferFunc(data).Equals("True"))
                 {
-                    MessageBox.Show("Запис успішно створено");
-                    MyPacDataGrid.Visibility = Visibility.Hidden;
-                    RefreshSchedule();
+                    MessageBox.Show("Рахунок успішно додано");
                 }
                 else
                 {
-                    MessageBox.Show("Записати пацієнта не вдалось");
+                    MessageBox.Show("Додати рахунок не вдалось. Спробуйте будь ласка пізніше");
                 }
             }
             else
@@ -338,7 +338,7 @@ namespace DiplomClient
             }
         }
 
-        private void BillsButton_Click(object sender, RoutedEventArgs e)    // TODO: Deleting bill
+        private void BillsButton_Click(object sender, RoutedEventArgs e)
         {
             Col1.Width = new GridLength(BillsDataGrid.Width + BillsDataGrid.Margin.Right + BillsDataGrid.Margin.Left);
             Row0.Height = GridLength.Auto;
@@ -346,9 +346,11 @@ namespace DiplomClient
             LookScheduleButton.Visibility = Visibility.Hidden;
             MyPacientsButton.Visibility = Visibility.Hidden;
             BillsButton.Visibility = Visibility.Hidden;
+            CommentsButton.Visibility = Visibility.Hidden;
             ExitButton.Visibility = Visibility.Hidden;
 
             BillsDataGrid.Visibility = Visibility.Visible;
+            DeleteBillButton.Visibility = Visibility.Visible;
             BackButton.Visibility = Visibility.Visible;
 
             BillsDataGrid.Items.Clear();
@@ -366,13 +368,54 @@ namespace DiplomClient
                 billData[i] = answerData[i].Split('|');
                 Bill bill = new Bill()
                 {
-                    Date = billData[i][0].Split(' ')[0],
-                    Name = billData[i][1],
-                    Cost = Convert.ToDecimal(billData[i][2]),
-                    PIB = billData[i][3],
-                    Login = billData[i][4]
+                    Id = Convert.ToInt32(billData[i][0]),
+                    Date = billData[i][1].Split(' ')[0],
+                    Name = billData[i][2],
+                    Cost = Convert.ToDecimal(billData[i][3]),
+                    PIB = billData[i][4],
+                    Login = billData[i][5]
                 };
                 BillsDataGrid.Items.Add(bill);
+            }
+        }
+
+        private void DeleteBillButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (BillsDataGrid.SelectedItem != null)
+            {
+                Bill bill = (Bill)BillsDataGrid.SelectedItem;
+                string sMessageBoxText = "Ви дійсно хочете видалити рахунок?";
+                string sCaption = "Попередження";
+
+                MessageBoxButton btnMessageBox = MessageBoxButton.YesNo;
+                MessageBoxImage icnMessageBox = MessageBoxImage.Warning;
+
+                MessageBoxResult rsltMessageBox = MessageBox.Show(sMessageBoxText, sCaption, btnMessageBox, icnMessageBox);
+
+                switch (rsltMessageBox)
+                {
+                    case MessageBoxResult.Yes:
+                        byte[] data = Encoding.Unicode.GetBytes("DeleteBill");
+                        data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+                        data = data.Concat(Encoding.Unicode.GetBytes(bill.Id.ToString())).ToArray();
+
+                        if (transfer.TransferFunc(data).Equals("True"))
+                        {
+                            MessageBox.Show("Рахунок успішно видалено");
+                        }
+                        else
+                        {
+                            MessageBox.Show("Видалити рахунок не вдалось. Спробуйте будь ласка пізніше");
+                        }
+                        break;
+
+                    case MessageBoxResult.No:
+                        break;
+                }
+            }
+            else
+            {
+                MessageBox.Show("Оберіть спочатку рахунок");
             }
         }
 
@@ -381,6 +424,7 @@ namespace DiplomClient
             LookScheduleButton.Visibility = Visibility.Hidden;
             MyPacientsButton.Visibility = Visibility.Hidden;
             BillsButton.Visibility = Visibility.Hidden;
+            CommentsButton.Visibility = Visibility.Hidden;
             ExitButton.Visibility = Visibility.Hidden;
 
             CommentsScrollViewer.Visibility = Visibility.Visible;
@@ -484,11 +528,13 @@ namespace DiplomClient
             AddBillButton.Visibility = Visibility.Hidden;
             EditLKButton.Visibility = Visibility.Hidden;
             BiilCanvas.Visibility = Visibility.Hidden;
+            DeleteBillButton.Visibility = Visibility.Hidden;
             BackButton.Visibility = Visibility.Hidden;
 
             LookScheduleButton.Visibility = Visibility.Visible;
             MyPacientsButton.Visibility = Visibility.Visible;
             BillsButton.Visibility = Visibility.Visible;
+            CommentsButton.Visibility = Visibility.Visible;
             ExitButton.Visibility = Visibility.Visible;
 
         }
@@ -521,5 +567,6 @@ namespace DiplomClient
         {
             this.Close();
         }
+
     }
 }

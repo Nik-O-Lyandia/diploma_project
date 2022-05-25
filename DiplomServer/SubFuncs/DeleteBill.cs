@@ -2,23 +2,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DiplomServer.SubFuncs
 {
-    class DeleteReseption
+    class DeleteBill
     {
-        public static bool DeleteReseptionFunc(string[] dataStringArray)
+        public static bool DeleteBillFunc(string[] dataStringArray)
         {
             using (iToothServContext iToothServ = new iToothServContext())
             {
                 int id = Convert.ToInt32(dataStringArray[1]);
-                Reseption res = iToothServ.Reseptions.Single(r => r.Id == id);
+                Bill bill = iToothServ.Bills.Single(b => b.Id == id);
 
                 try
                 {
-                    res.Status = 4;
+                    iToothServ.Bills.Remove(bill);
 
                     iToothServ.SaveChanges();
                     return true;

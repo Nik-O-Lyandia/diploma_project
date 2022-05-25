@@ -257,10 +257,25 @@ namespace DiplomServer
                     }
                 }
 
-                //---------------------Видалення запису------------------------
-                if (dataStringArray[0].Equals("DeleteReseption"))
+                //---------------------Відміна запису------------------------
+                if (dataStringArray[0].Equals("CancelReseption"))
                 {
-                    boolAnswer = DeleteReseption.DeleteReseptionFunc(dataStringArray);
+                    boolAnswer = CancelReseption.CancelReseptionFunc(dataStringArray);
+
+                    if (boolAnswer)
+                    {
+                        sendData = "True";
+                    }
+                    else
+                    {
+                        sendData = "False";
+                    }
+                }
+
+                //---------------------Видалення запису------------------------
+                if (dataStringArray[0].Equals("DeleteBill"))
+                {
+                    boolAnswer = DeleteBill.DeleteBillFunc(dataStringArray);
 
                     if (boolAnswer)
                     {

@@ -42,7 +42,7 @@ namespace DiplomServer.SubFuncs
                             }
                             if (dataStringArray[1].Equals("Лікар"))
                             {
-                                answerStr += bills[i].IssueDate.ToString() + "|" + bills[i].Name + "|" + bills[i].Cost.ToString() + "|" +
+                                answerStr += bills[i].Id.ToString() + "|" + bills[i].IssueDate.ToString() + "|" + bills[i].Name + "|" + bills[i].Cost.ToString() + "|" +
                                     dataPac.Single(d => d.Id == bills[i].PacientId).Surname + " " + dataPac.Single(d => d.Id == bills[i].PacientId).Name + "|" +
                                     docLogins[i] + "$";
                             }
