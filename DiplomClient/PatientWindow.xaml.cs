@@ -357,15 +357,16 @@ namespace DiplomClient
                 for (int j = 0; j < ScheduleDataGrid.Items.Count; j++)
                 {
                     Reseption reseption = (Reseption)ScheduleDataGrid.Items[j];
-                    if (reseption.Date == Convert.ToDateTime(visitData[i][0]).ToShortDateString() && reseption.Time == visitData[i][1])
+                    if (reseption.Date == Convert.ToDateTime(visitData[i][1]).ToShortDateString() && reseption.Time == visitData[i][2] && Convert.ToInt32(visitData[i][5]) == 1)
                     {
                         Reseption visit = new Reseption()
                         {
-                            Date = Convert.ToDateTime(visitData[i][0]).ToShortDateString(),
-                            Time = visitData[i][1],
+                            Id = Convert.ToInt32(visitData[i][0]),
+                            Date = Convert.ToDateTime(visitData[i][1]).ToShortDateString(),
+                            Time = visitData[i][2],
                             TimeId = reseption.TimeId,
-                            PIB = visitData[i][2],
-                            Login = visitData[i][3],
+                            PIB = visitData[i][3],
+                            Login = visitData[i][4],
                             FreeOrNot = false
                         };
                         ScheduleDataGrid.Items[j] = visit;

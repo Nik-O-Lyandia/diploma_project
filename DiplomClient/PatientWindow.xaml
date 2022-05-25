@@ -280,6 +280,9 @@
 				  Visibility="Hidden"
 				  Margin="30,30,30,30">
 			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id"
+									Binding="{Binding Id}" 
+									Visibility="Hidden" />
 				<DataGridTextColumn Header="Ім'я"
 									Binding="{Binding Name}" />
 				<DataGridTextColumn Header="Прізвище"

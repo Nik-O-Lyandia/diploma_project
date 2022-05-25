@@ -173,6 +173,9 @@
 				  VerticalAlignment="Top"
 				  Width="419">
 			<DataGrid.Columns>
+				<DataGridTextColumn Header="Id"
+									Binding="{Binding Id}" 
+									Visibility="Hidden"/>
 				<DataGridTextColumn Header="Дата"
 									Binding="{Binding Date}" />
 				<DataGridTextColumn Header="Час"
@@ -202,8 +205,6 @@
 				<DataGridTextColumn Header="Login"
 									Binding="{Binding Login}"
 									Visibility="Hidden" />
-				<DataGridTextColumn Header="Статус"
-									Binding="{Binding Status}" />
 			</DataGrid.Columns>
 		</DataGrid>
 		<DataGrid x:Name="MyPacDataGrid"

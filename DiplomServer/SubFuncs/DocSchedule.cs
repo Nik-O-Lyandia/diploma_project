@@ -37,18 +37,24 @@ namespace DiplomServer.SubFuncs
                         {
                             if (dataStringArray[1].Equals("Пацієнт"))
                             {
-                                answerStr += reseptions[i].Attendingdate.ToString() + "|" +
+                                answerStr +=
+                                    reseptions[i].Id.ToString() + "|" +
+                                    reseptions[i].Attendingdate.ToString() + "|" +
                                     //reseptions[i].Time + "|" +
                                     (9 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00-" + (10 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00" + "|" +
                                     dataDoc.Single(d => d.Login == docLogins[i]).Surname + " " + dataDoc.Single(d => d.Login == docLogins[i]).Name + "|" +
-                                    dataDoc.Single(d => d.Login == docLogins[i]).Login + "$";
+                                    dataDoc.Single(d => d.Login == docLogins[i]).Login + "|" +
+                                    reseptions[i].Status.ToString() + "$";
                             }
                             if (dataStringArray[1].Equals("Лікар"))
                             {
-                                answerStr += reseptions[i].Attendingdate.ToString() + "|" +
+                                answerStr +=
+                                    reseptions[i].Id.ToString() + "|" + 
+                                    reseptions[i].Attendingdate.ToString() + "|" +
                                     //reseptions[i].Time + "|" +
                                     (9 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00-" + (10 + Convert.ToInt32(reseptions[i].Time) % 9) + ":00" + "|" +
-                                    pacLogins[i] + "$";
+                                    pacLogins[i] + "|" +
+                                    reseptions[i].Status.ToString() + "$";
                             }
                         }
                     }

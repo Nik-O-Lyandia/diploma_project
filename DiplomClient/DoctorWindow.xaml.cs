@@ -93,14 +93,15 @@ namespace DiplomClient
                 for (int j = 0; j < ScheduleDataGrid.Items.Count; j++)
                 {
                     Reseption reseption = (Reseption)ScheduleDataGrid.Items[j];
-                    if (reseption.Date == Convert.ToDateTime(visitData[i][0]).ToShortDateString() && reseption.Time == visitData[i][1])
+                    if (reseption.Date == Convert.ToDateTime(visitData[i][1]).ToShortDateString() && reseption.Time == visitData[i][2] && Convert.ToInt32(visitData[i][4]) == 1)
                     {
                         Reseption visit = new Reseption()
                         {
-                            Date = Convert.ToDateTime(visitData[i][0]).ToShortDateString(),
-                            Time = visitData[i][1],
+                            Id = Convert.ToInt32(visitData[i][0]),
+                            Date = Convert.ToDateTime(visitData[i][1]).ToShortDateString(),
+                            Time = visitData[i][2],
                             TimeId = reseption.TimeId,
-                            Login = visitData[i][2],
+                            Login = visitData[i][3],
                             FreeOrNot = false
                         };
                         ScheduleDataGrid.Items[j] = visit;
@@ -115,14 +116,24 @@ namespace DiplomClient
             {
                 Reseption reseption = (Reseption)ScheduleDataGrid.SelectedItem;
 
-                MessageBox.Show(reseption.Login);
+                byte[] data = Encoding.Unicode.GetBytes("PacVisited");
+                data = data.Concat(Encoding.Unicode.GetBytes("|")).ToArray();
+                data = data.Concat(Encoding.Unicode.GetBytes(reseption.Id.ToString())).ToArray();
+
+                if (transfer.TransferFunc(data).Equals("True"))
+                {
+                    MessageBox.Show("Позначка 'Пацієнт з'явився' успішно додана");
+                    RefreshSchedule();
+                }
+                else
+                {
+                    MessageBox.Show("Редагувати запис не вдалося. Спробуйте будь ласка пізніше");
+                }
             }
             else
             {
                 MessageBox.Show("Оберіть активний прийом зі списку");
             }
-
-            // TODO: Пацієнт з'явився на прийом
 
         }
 
@@ -149,7 +160,7 @@ namespace DiplomClient
             }
             else
             {
-                MessageBox.Show("Оберіть Дату/Час зі списку");
+                MessageBox.Show("Оберіть прийом з незакріпленим пацієнтом зі списку");
             }
         }
 

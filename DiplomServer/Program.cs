@@ -287,6 +287,21 @@ namespace DiplomServer
                     }
                 }
 
+                //---------------------Пацієнт прийшов на прийом------------------------
+                if (dataStringArray[0].Equals("PacVisited"))
+                {
+                    boolAnswer = PacVisited.PacVisitedFunc(dataStringArray);
+
+                    if (boolAnswer)
+                    {
+                        sendData = "True";
+                    }
+                    else
+                    {
+                        sendData = "False";
+                    }
+                }
+
                 if (!dataStringArray[0].Equals("VisitBooking") && !dataStringArray[0].Equals("GetComments"))
                     listener.Send(Encoding.Unicode.GetBytes(sendData));
 
